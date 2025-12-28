@@ -7,14 +7,14 @@ def solutions(data):
     instructions = data.strip().split('\n')
 
     for instruction in instructions:
-        if not instruction:  # Skip empty lines
+        if not instruction:
             continue
 
         if instruction.startswith('L'):
-            turn_num = int(instruction[1:])  # More efficient than split
+            turn_num = int(instruction[1:])
             cur_num = cur_num - turn_num
         elif instruction.startswith('R'):
-            turn_num = int(instruction[1:])  # More efficient than split
+            turn_num = int(instruction[1:])
             cur_num = cur_num + turn_num
         else:
             print(f"Warning: Unexpected instruction format: {instruction}")
