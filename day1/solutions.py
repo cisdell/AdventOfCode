@@ -24,45 +24,33 @@ def solution_1(data):
             count += 1
     return count
 
+
+# def cross_detection(start_number, turn_num):
+#     count = 0
+#     temp = -1 if turn_num < 0 else 1
+#     for num in range(start_number, start_number + turn_num + temp, temp):
+#       if num % 100 == 0:
+#         count += 1
+#     return count
+
 def solution_2(data):
-    count = 0
-    cur_num = 50
     instructions = data.strip().split('\n')
-
-    for instruction in instructions:
-        if not instruction:
-            continue
-        start = cur_num
-        if instruction.startswith('L'):
-          turn_num = int(instruction[1:])
-          cur_num = cur_num - turn_num
-        elif instruction.startswith('R'):
-          turn_num = int(instruction[1:])
-          cur_num = cur_num + turn_num
-        else:
-            print(f"Warning: Unexpected instruction format: {instruction}")
-            continue
-
-        # if cur_num % 100 == 0:
-        #   count += 1
-        # if cross_detection(start, cur_num):
-        #   count += 1
-        count += cross_detection(start, cur_num)
-
+    pos = 50
+    count = 0
+    for line in instructions:
+        d = line[0]
+        amt = int(line[1:])
+        for _ in range(amt):
+            if d=='L':
+                pos = (pos-1+100)%100 #made it consistent with positive counts
+            else:
+                pos = (pos+1)%100
+            if pos==0:
+                p2 += 1
+        if pos==0:
+            p1 += 1
     return count
 
-def cross_detection(start, end):
-    if start == end:
-        return 0
-
-    min_val = min(start, end)
-    max_val = max(start, end)
-
-    # This counts how many multiples of 100 are between min_val and max_val
-    # including if we land exactly on one
-    return (max_val // 100) - (min_val // 100)
-
-    return lower != upper
 if __name__ == '__main__':
     base_dir = os.path.dirname(__file__)
     file_path = os.path.join(base_dir, 'tests.txt')
@@ -76,5 +64,5 @@ if __name__ == '__main__':
         print(f"File exists: {os.path.exists(file_path)}")
     else:
         # result = solution_1(data)
-        result = solution_2(data)
-        print(f"Result: {result}")
+        # result = solution_2(data)
+        # print(f"Result: {result}")
