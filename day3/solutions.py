@@ -18,12 +18,24 @@ def solution_2(data):
     max_nums = []
     instructions = data.strip().split('\n')
     for line in instructions:
-        line_list = [num for num in str(line)]
-
-
-        max_nums.append(cur_max)
-    print(max_nums)
+        line_str = str(line)
+        cur_max = largest_number_keep_k(line_str, 12)
+        max_nums.append(int(cur_max))
     return sum(max_nums)
+
+
+def largest_number_keep_k(num_str: str, k: int) -> str:
+    stack = []
+    to_remove = len(num_str) - k
+
+    for digit in num_str:
+        while to_remove > 0 and stack and stack[-1] < digit:
+            stack.pop()
+            to_remove -= 1
+        stack.append(digit)
+
+    # Trim if we kept too many digits
+    return ''.join(stack[:k])
 
 if __name__ == '__main__':
     base_dir = os.path.dirname(__file__)
@@ -37,6 +49,6 @@ if __name__ == '__main__':
         print(f"File path: {file_path}")
         print(f"File exists: {os.path.exists(file_path)}")
     else:
-        result = solution(data)
+        result = solution_2(data)
 
         print(f"Result: {result}")
